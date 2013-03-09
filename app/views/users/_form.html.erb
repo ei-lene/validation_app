@@ -1,0 +1,60 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+    <span id="username_error"> Username should have more than 3 characters</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+    <span id="first_name_error"> First name should have more than 3 characters, and should only include letters</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+    <span id="last_name_error"> First name should have more than 3 characters, and should only include letters</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+    <span id="email_error"> Email should be valid</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :please_confirm_your_email %><br />
+    <%= f.text_field :email_confirmation %>
+    <span id="email_confirmation_error"> Confirmation email does not match email</span>
+    <span id="email_validated"> Email entries match</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+    <span id="password_error"> Password should have at least 6 characters</span>
+  </div>
+  
+  <div class="field">
+    <%= f.label :please_confirm_your_password %><br />
+    <%= f.password_field :password_confirmation %>
+    <span id="password_confirmation_error"> Confirmation password does not match password</span>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
