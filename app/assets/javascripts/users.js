@@ -18,15 +18,105 @@ $(document).ready(function(){
       passwordError = $('#password_error'),
       passwordConfError = $('#password_confirmation_error'),
       newUserForm = $('#new_user') ;
+  
+  $('span').hide(); // Initially hide error message spans
 
-  // Email & password confirmation values
-  var emailConfVal = emailConfirmation.val('');
-  var passwordConfVal = passwordConfirmation.val('');
-  var emailVal = email.val(''); // need to be globally scoped to validate match
-  var passwordVal = password.val(''); // need to be globally scoped to validate match
+  // Validation functions
+  function validateUsername(){
+    var userNameVal = userName.val();  
+    if(userNameVal.length < 3) {
+      userNameError.show();
+      return false;
+    }
+    else {
+      userNameError.hide();
+      return true;
+    }
+  }
 
+  function validateFirstname(){
+    var firstNameVal = firstName.val();
+    var alphabet = /[a-zA-Z]/;
+    if(firstNameVal.length < 3 || !alphabet.test(firstNameVal)) {
+      firstNameError.show();
+      return false;
+    }
+    else {
+      firstNameError.hide();
+      return true;
+    }
+  }
 
-  // Email validation on Keyup and Blur
+  function validateLastname(){
+    var lastNameVal = lastName.val();
+    var alphabet = /[a-zA-Z]/;
+    if(lastNameVal.length < 3 || !alphabet.test(lastNameVal)) {
+      lastNameError.show();
+      return false;
+    }
+    else {
+      lastNameError.hide();
+      return true;
+    }
+  }
+
+  function validateEmail() {
+    var emailVal = email.val();
+    var e = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
+    if(!e.test(emailVal)) {
+      emailError.show();
+      return false;
+    }
+    else if(emailVal !== emailConfVal) {
+      emailConfError.show();
+      return false;
+    }
+    else {
+      emailError.hide();
+      emailConfError.hide();
+      return true;
+    }
+  }
+
+  function validatePassword(){
+    var passwordVal = password.val();
+    if(passwordVal.length < 6) {
+      passwordError.show();
+      return false;
+    }
+    else if(passwordVal !== passwordConfVal) {
+      passwordConfError.show();
+      return false;
+    }
+    else {
+      passwordError.hide();
+      passwordConfError.hide();
+      return true;
+    }
+  }
+
+  // Validate input formats on Blur
+  userName.blur(function(){
+    validateUsername(); 
+  });
+
+  firstName.blur(function(){
+     validateFirstname(); 
+  });
+
+  lastName.blur(function(){
+     validateLastname(); 
+  });
+
+  email.blur(function(){
+     validateEmail(); 
+  });
+
+  password.blur(function(){
+     validatePassword(); 
+  });
+
+  // Email confirmation validation on Keyup and Blur
   emailInputs.keyup(function(){
     emailConfVal = emailConfirmation.val();
     emailVal = email.val();
@@ -56,7 +146,7 @@ $(document).ready(function(){
     } 
   });
 
-  // Password validation on Keyup and Blur
+  // Password confirmation validation on Keyup and Blur
   passwordInputs.keyup(function(){
     passwordConfVal = passwordConfirmation.val();
     passwordVal = password.val();
@@ -85,99 +175,15 @@ $(document).ready(function(){
       passwordConfError.text("Password entries match")
     } 
   });  
-        
-  $('span').hide(); // Initially hide error message spans
 
-  newUserForm.submit(function(){
-
-    var userNameVal = userName.val();
-    var firstNameVal = firstName.val();
-    var lastNameVal = lastName.val();
-    emailVal = email.val();
-    passwordVal = password.val();
-    emailConfVal = emailConfirmation.val();
-    passwordConfVal = passwordConfirmation.val();
-    
-    function validateUsername(){
-      if(userNameVal.length < 3) {
-        userNameError.show();
-        return false;
-      }
-      else {
-        userNameError.hide();
-        return true;
-      }
-    }
-
-    function validateFirstname(){
-      var alphabet = /[a-zA-Z]/;
-      if(firstNameVal.length < 3 || !alphabet.test(firstNameVal)) {
-        firstNameError.show();
-        return false;
-      }
-      else {
-        firstNameError.hide();
-        return true;
-      }
-    }
-
-    function validateLastname(){
-      var alphabet = /[a-zA-Z]/;
-      if(lastNameVal.length < 3 || !alphabet.test(lastNameVal)) {
-        lastNameError.show();
-        return false;
-      }
-      else {
-        lastNameError.hide();
-        return true;
-      }
-    }
-
-    function validateEmail() {
-      var e = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
-      if(!e.test(emailVal)) {
-        emailError.show();
-        return false;
-      }
-      else if(emailVal !== emailConfVal) {
-        emailConfError.show();
-        return false;
-      }
-      else {
-        emailError.hide();
-        emailConfError.hide();
-        return true;
-      }
-    }
-
-    function validatePassword(){
-      if(passwordVal.length < 6) {
-        passwordError.show();
-        return false;
-      }
-      else if(passwordVal !== passwordConfVal) {
-        passwordConfError.show();
-        return false;
-      }
-      else {
-        passwordError.hide();
-        passwordConfError.hide();
-        return true;
-      }
-    }
-
-
-
+  // Validation on submit
+  newUserForm.submit(function(){  
     if(validateUsername() & validateFirstname() & validateLastname() & validateEmail() &validatePassword()) {
       return true;
     } 
     else {
       return false;
     }
-
   }); // end submit form
-
-
-
 
 }); // end document ready
