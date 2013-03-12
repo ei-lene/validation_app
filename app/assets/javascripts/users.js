@@ -154,7 +154,6 @@ $(document).ready(function(){
     }       
     else {
       emailConfError.hide();
-      emailConfError.removeClass;
       emailConfError.text("Confirmation email does not match email").addClass('red');
       emailConfError.show();
     }
@@ -181,12 +180,10 @@ $(document).ready(function(){
         passwordConfError.hide();
     }
     else if(passwordVal === passwordConfVal){
-      passwordConfError.removeClass;
       passwordConfError.text("Password entries match").addClass('green');
     }       
     else {
       passwordConfError.hide();
-      passwordConfError.removeClass;
       passwordConfError.text("Confirmation password does not match password").addClass('red');
       passwordConfError.show();
     }
@@ -206,7 +203,7 @@ $(document).ready(function(){
 
   // Validation on submit
   newUserForm.submit(function(){  
-    if(validateUsername() & validateFirstname() & validateLastname() & validateEmail() &validatePassword()) {
+    if(validateUsername() & validateFirstname() & validateLastname() & validateEmail() & validatePassword()) {
       return true;
     } 
     else {
