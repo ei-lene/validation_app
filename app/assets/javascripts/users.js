@@ -98,19 +98,15 @@ $(document).ready(function(){
       passwordError.text("Password strength: Strong").removeClass().addClass('green');
     }
     else if(lowercase.test(passwordVal) && uppercase.test(passwordVal)){
-      // passwordError.removeClass();
       passwordError.text("Password strength: Medium").removeClass().addClass('amber');
     }
     else if(numeric.test(passwordVal) && uppercase.test(passwordVal)){
-      // passwordError.removeClass();
       passwordError.text("Password strength: Medium").removeClass().addClass('amber');
     }
     else if(numeric.test(passwordVal) && lowercase.test(passwordVal)){
-      // passwordError.removeClass();
       passwordError.text("Password strength: Medium").removeClass().addClass('amber');
     }
     else {
-      // passwordError.removeClass();
       passwordError.text("Password strength: Weak").addClass('red');
     }
   }
@@ -192,7 +188,7 @@ $(document).ready(function(){
   passwordConfirmation.blur(function(){
     passwordConfVal = passwordConfirmation.val();
     passwordVal = password.val();
-    passwordConfError.show(); 
+    passwordConfError.show().addClass('red');
     if(passwordVal===''||passwordConfVal==='') {
       passwordConfError.hide();
     }
